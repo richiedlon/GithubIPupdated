@@ -4,26 +4,25 @@
 <head>
     <title>IP Project</title>
     <meta charset="utf-8" />
-   
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" />
 	<link rel="stylesheet" href="static/css/sliders.css"/>
+	
 	<!-- Page loading indicator-->
 	<link rel="stylesheet" href="static/css/pace-theme-center-atom.css"/>
 	<script src="static/js/pace.js"></script>
 
-
 	<!-- Leaflet libraries-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
 	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-	<!-- Draw-->
+	
+	<!-- Draw menu-->
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script>
 	<link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
 	
-	<!-- Slide menu-->
+	<!-- Slider menu-->
 	<link rel="stylesheet" href="static/css/SlideMenu.css" />
 	<script src="static/js/SlideMenu.js"></script> 
-	
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	
 	<!-- GeoCoder and other-->
@@ -56,7 +55,6 @@
 		background-image: url("static/img/home_000000_14.png");
 		}
 
-
 		.leaflet-control-navbar-fwd-disabled {
 		background-image: url("static/img/arrow-right_bbbbbb_14.png");
 		}
@@ -74,16 +72,13 @@
 	<!-- Font and bootstrap plugin--> 
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		
 	<!-- jquery-->
-
-
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="static/js/map.js"></script>
 
-	
     <style>
         body {
             padding: 0;
@@ -93,23 +88,25 @@
             height: 97%;
             width: 100%;
         }
-
-
-	
     </style>
 </head>
+
+
 <body>
+		<!-- Link to the header section -->
 		{% include 'header.php' %}
+
+		<!-- Map element initiatilzed -->
 		<div id="map"></div>
 	
     <script>
 	
+		var wmsRequestURL = "http://localhost:8080/geoserver/wms?";	
+
 		///// Base map \\\\
 		var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 		var WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
 		
-		var wmsRequestURL = "http://localhost:8080/geoserver/wms?";	
-	
 		///// Default Base map initialization\\\\\ 	
 		var map = L.map('map', {
 				layers: [OpenStreetMap], /// Base map
@@ -117,14 +114,12 @@
 				zoom: 12	//// Zoom level
 			});
 		
-
 		/////Base map initialization\\\\\
 		var baseLayers = {
 			"Open Street Map": OpenStreetMap,
 			"World Imagery": WorldImagery
 		};
 
-		
 		///// layers from Geoserver (format WMS)\\\\
 		var market = L.tileLayer.wms(wmsRequestURL, {
 			layers: 'ipproject:SupermarketServices',
@@ -168,17 +163,9 @@
 			version: '1.1.0',
 			attribution: "myattribution"
 		});
-		
-		var properties = L.tileLayer.wms(wmsRequestURL, {
-			layers: 'ipproject:ApartmentLocations',
-			format: 'image/png',
-			transparent: true,
-			version: '1.1.0',
-			attribution: "myattribution"
-		});
+  
 
-						  
-		///// Group layers\\\\\
+		///// Layer Group\\\\\
 		var overlays = {			
 			"Hospital service areas": hospitals_service,
 			"Market": market,
@@ -186,33 +173,30 @@
 			"Ambulance service areas": Ambulance,
 			"Fire and Rescue service areas": Fire,
 			"Green spaces and Community Parks": parks,
-			"Real estate locations": properties
-			
-			
 		};
-		//// Add the Find to the map\\\\\ 
+
+
+		//// Adding Find bar to the map\\\\\ 
 		var osmGeocoder = new L.Control.OSMGeocoder();
         map.addControl(osmGeocoder);
 				
-		///// Add the Overview to the map\\\\\ 
+		///// Adding the mini-Overview to the map\\\\\ 
         var osm2 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 		var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
 		
-		///// Add the scale control to the map\\\\\
+		///// Adding the scale control to the map\\\\\
 		L.control.scale().addTo(map);
 			
-		///// Add the Navigation Bar to the map\\\\\\ 
+		///// Adding the Navigation Bar to the map\\\\\\ 
 		L.control.navbar({position: 'topleft'}).addTo(map);
 			
-
-		
-		///// Add the geolocate control to the map\\\\\
+		///// Adding the geolocate control to the map\\\\\
 		L.control.locate().addTo(map);
 		
-		///// Add the mouse position to the map - To get the coordinates of the map cursor \\\\\
+		///// Adding the mouse position to the map - To get the coordinates of the map cursor \\\\\
 		L.control.mousePosition().addTo(map);
 		
-		///// Add the draw feature to the map\\\\\
+		///// Adding the draw feature to the map\\\\\
 		var drawnItems = new L.FeatureGroup();
 		map.addLayer(drawnItems);
 
@@ -252,7 +236,7 @@
 		});
 		
 		
-		///// Layer menu legend \\\\\
+		///// Layer menu legend- retrieved from SLD published on geoserver \\\\\
 		var div = L.DomUtil.create('div', 'info-legend');	
 			var title1 = 'Markets and Shopping malls';
 			contents1 = div.innerHTML = '<br><img src="'+wmsRequestURL+'REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=ipproject:SupermarketServices" </img><br>';
@@ -272,44 +256,38 @@
 			var title6 = 'Ambulance service areas';
 			contents6 = div.innerHTML = '<br><img src="'+wmsRequestURL+'REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=ipproject:AmbulanceService" </img><br>';
 			
-			
-			var title9 = 'Real estates';
-			contents9 = div.innerHTML = '<br><img src="'+wmsRequestURL+'REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=ipproject:ApartmentLocations" </img><br>';
-			
-			
 			var slideMenu = L.control.slideMenu('', {position: 'topright',height: '100%',direction: 'horizontal',delay: '5'}).addTo(map);
-			slideMenu.setContents(title1 + contents1 + title2 + contents2 + title3 + contents3 + title4 + contents4 + title5 + contents5 + title6 + contents6 + title9 + contents9);
+			slideMenu.setContents(title1 + contents1 + title2 + contents2 + title3 + contents3 + title4 + contents4 + title5 + contents5 + title6 + contents6);
 		
 		///// Adding base layers + geoserver layers
 		L.control.layers(baseLayers,overlays).addTo(map);
 
+
 		/// Adding geoJSON layer as a popup to show apartment prices \\\
-					var layerGroup = L.geoJson(data, {
-					  onEachFeature: function (feature, layer) {
-					    layer.bindPopup(
-					    `<table>
-								  <tr>
-								    <td><b>Name</td>
-								    <td>`+feature.properties.Name+`</td>
-								  </tr>
-								  <tr>
-								    <td><b>Cost</td>
-								    <td>`+feature.properties.Cost+`</td>
-								  </tr>
-								  <tr>
-								    <td><b>Status</td>
-								    <td>`+feature.properties.Status+`</td>
-								  </tr>
-								  <tr>
-								    <td><b>Telephone</td>
-								    <td>+`+feature.properties.Telephone+`</td>
-								  </tr>
-						</table>`);
-					  }
-					}).addTo(map);
+		var layerGroup = L.geoJson(data, {
+			onEachFeature: function (feature, layer) {
+			layer.bindPopup(
+			`<table>
+						<tr>
+							<td><b>Name</td>
+							<td>`+feature.properties.Name+`</td>
+						</tr>
+						<tr>
+							<td><b>Cost</td>
+							<td>`+feature.properties.Cost+`</td>
+						</tr>
+						<tr>
+							<td><b>Status</td>
+							<td>`+feature.properties.Status+`</td>
+						</tr>
+						<tr>
+							<td><b>Telephone</td>
+							<td>+`+feature.properties.Telephone+`</td>
+						</tr>
+			</table>`);
+			}
+		}).addTo(map);
 
-
-		
     </script>
 
 

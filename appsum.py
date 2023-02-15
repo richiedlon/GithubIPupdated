@@ -87,7 +87,7 @@ def living():
 
 	#Spatial Join Begins
 	ApartmentLocations = "C:\\IPProject\\IPProject_files\\GithubIP\\Apartments\\ApartmentLocations.shp"
-	finalapartment_shp = "C:\\ipproject\\IPProject_files\\GithubIP\\Vector\\Spatial_Join\\apartment"+startValue+".shp"
+	finalapartment_shp = "C:\\Ipproject\\IPProject_files\\GithubIP\\Vector\\Spatial_Join\\apartment"+startValue+".shp"
 	arcpy.analysis.SpatialJoin(target_features=ApartmentLocations, join_features=Output_polygon_features, out_feature_class=finalapartment_shp, 
 	join_operation="JOIN_ONE_TO_ONE", 
 	join_type="KEEP_ALL", 
@@ -101,7 +101,7 @@ def living():
 	# Start - Data store for final areas
 	geo.create_datastore(name=startValue, path=Output_polygon_features, workspace='ipproject')
 	geo.publish_featurestore(workspace='ipproject', store_name=startValue, pg_table=startValue)
-	geo.publish_style(layer_name=startValue, style_name='finalstyle', workspace='ipproject')
+	geo.publish_style(layer_name=startValue, style_name='finalAreas_ope', workspace='ipproject')
 	# End - Data store for final areas
 
 	# Start - Data store for final apartments

@@ -32,9 +32,9 @@
       </div>
       <div class="modal-body">
         
+        <!-- link to the form -->
         {% include 'livingconditionform.php' %}
         
-
       </div>
 
     </div>
