@@ -11,38 +11,19 @@
 	<link rel="stylesheet" href="static/css/pace-theme-center-atom.css"/>
 	<script src="static/js/pace.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
 
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="static/css/contact.css">
+  <link rel="stylesheet" href="static/css/contact.css">
     	<!-- Navigation Bar-->
-    <style>
-    	.leaflet-control-navbar-fwd {
-		background-image: url("/static/img/arrow-right_000000_14.png");
-		}
 
-		.leaflet-control-navbar-back {
-		background-image: url("static/img/arrow-left_000000_14.png");
-		}
-
-		.leaflet-control-navbar-home {
-		background-image: url("static/img/home_000000_14.png");
-		}
-
-
-		.leaflet-control-navbar-fwd-disabled {
-		background-image: url("static/img/arrow-right_bbbbbb_14.png");
-		}
-
-		.leaflet-control-navbar-back-disabled {
-		background-image: url("static/img/arrow-left_bbbbbb_14.png");
-		}
-
-		.leaflet-control-navbar-home-disabled {
-		background-image: url("static/img/home_bbbbbb_14.png");
-		}
-    </style>
-    <script src="static/js/NavBar.js"></script>
+  <script src="static/js/NavBar.js"></script>
     	<!-- Font and bootstrap plugin--> 
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -66,18 +47,18 @@ body {
   <body>
   	{% include 'header.php' %}
       
-        <div class="block-title">
-        	<br>
+      <div id="container">
+        <div  class="textbox">
           <h3 class="text-uppercase">Contact Form</h3>
-        </div>
-        <div class="buffer"></div>
-        <div>
-            <h5 class="describe">How was your experience using our app? We would love to hear from you!</h5>
-        </div>
           <div class="buffer"></div>
-          <div class="row">
-          	<div class="col-6">
+          <h5 class="describe">How was your experience using our app? We would love to hear from you!</h5>
+          <div class="buffer"></div>
+        </div>
+      <div class ="row">
+        <div class = "col">
+          <div class="mapform" >
             <form action="https://formsubmit.co/f9b8e76c5c355bca4570bc313482a1ef" method="POST">
+
                 <div class="form-control">
                     <div class="form-group">
                         <label class="label">Full Name</label>
@@ -102,13 +83,29 @@ body {
 
                     <input type="submit" class="button btn btn-primary btn-send" value="Send message">
                 </div>
-                
-        </form>
+              </form>
+          </div>
         </div>
+          <div class="col">
+            <div id="map"></div>
+          </div>
+      </div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <script>
+      var map = L.map('map').setView([47.823092359253536, 13.039849629205637], 15);
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+      var marker = L.marker([47.823092359253536, 13.039849629205637]).addTo(map);
+      marker.bindPopup("<b>Proudly developed at Techno-Z!").openPopup();
+
+    </script>
   </body>
 </html>
 

@@ -84,9 +84,34 @@ def living():
 	Output_polygon_features = "C:\\ipproject\\IPProject_files\\GithubIP\\Vector\\"+startValue+".shp"
 	arcpy.RasterToPolygon_conversion(outRasterReclass, Output_polygon_features, "SIMPLIFY", "VALUE","MULTIPLE_OUTER_PART")
 	
+
+	#Spatial Join Begins
+	ApartmentLocations = "C:\\IPProject\\IPProject_files\\GithubIP\\Apartments\\ApartmentLocations.shp"
+	finalapartment_shp = "C:\\ipproject\\IPProject_files\\GithubIP\\Vector\\Spatial_Join\\apartment"+startValue+".shp"
+	arcpy.analysis.SpatialJoin(target_features=ApartmentLocations, join_features=Output_polygon_features, out_feature_class=finalapartment_shp, 
+	join_operation="JOIN_ONE_TO_ONE", 
+	join_type="KEEP_ALL", 
+	field_mapping="Shape_Leng \"Shape_Leng\" true true false 19 Double 0 0,First,#,ApartmentLocations,Shape_Leng,-1,-1;Shape_Area \"Shape_Area\" true true false 19 Double 0 0,First,#,ApartmentLocations,Shape_Area,-1,-1;ORIG_FID \"ORIG_FID\" true true false 10 Long 0 10,First,#,ApartmentLocations,ORIG_FID,-1,-1;Id \"Id\" true true false 10 Long 0 10,First,#,finalAreas1,Id,-1,-1;gridcode \"gridcode\" true true false 10 Long 0 10,First,#,finalAreas1,gridcode,-1,-1",
+	match_option="INTERSECT", 
+	search_radius="", 
+	distance_field_name="")
+	#Spatial Join Ends
+
+
+	# Start - Data store for final areas
 	geo.create_datastore(name=startValue, path=Output_polygon_features, workspace='ipproject')
 	geo.publish_featurestore(workspace='ipproject', store_name=startValue, pg_table=startValue)
 	geo.publish_style(layer_name=startValue, style_name='finalstyle', workspace='ipproject')
+	# End - Data store for final areas
+
+	# Start - Data store for final apartments
+	apartmentsDataStore = "apartment"+startValue
+	geo.create_datastore(name=apartmentsDataStore, path=finalapartment_shp, workspace='ipproject')
+	geo.publish_featurestore(workspace='ipproject', store_name=apartmentsDataStore, pg_table=apartmentsDataStore)
+	geo.publish_style(layer_name=apartmentsDataStore, style_name='finalAparts', workspace='ipproject')
+	# End - Data store for final apartments
+
+
 	
 	return redirect(url_for('test',variable = startValue))
 

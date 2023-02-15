@@ -179,9 +179,9 @@
 			version: '1.1.0',
 			attribution: "myattribution"
 		});
-		
+		var finalApart = 'ipproject:apartment'+letters
 		var properties = L.tileLayer.wms(wmsRequestURL, {
-			layers: 'ipproject:ApartmentLocations',
+			layers: finalApart,
 			format: 'image/png',
 			transparent: true,
 			version: '1.1.0',
@@ -294,7 +294,7 @@
 			console.log(contents7);
 			
 			var title9 = 'Real estates';
-			contents9 = div.innerHTML = '<br><img src="'+wmsRequestURL+'REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=ipproject:ApartmentLocations" </img><br>';
+			contents9 = div.innerHTML = '<br><img src="'+wmsRequestURL+'REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=ipproject:apartment'+letters +'" </img><br>';
 			
 			
 			var slideMenu = L.control.slideMenu('', {position: 'topright',height: '100%',direction: 'horizontal',delay: '5'}).addTo(map);
@@ -304,6 +304,11 @@
 		L.control.layers(baseLayers,overlays).addTo(map);
 
 		/// Adding geoJSON layer as a popup to show apartment prices \\\
+			var myStyle = {
+			    "color": "#ff7800",
+			    "weight": 5,
+			    "opacity": 0.65
+			};
 					var layerGroup = L.geoJson(data, {
 					  onEachFeature: function (feature, layer) {
 					    layer.bindPopup(
