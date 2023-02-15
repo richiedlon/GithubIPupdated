@@ -1,4 +1,4 @@
-import arcpy
+#import modulesimport arcpy
 from arcpy.sa import *
 from flask import Flask, redirect, url_for, render_template
 from flask_wtf import FlaskForm
@@ -18,21 +18,25 @@ def home():
 
 tempVal = 0
 startValue = 0
+
+#Geoserver
 geo = Geoserver('http://localhost:8080/geoserver', username='admin', password='geoserver')
 
-
+#Rendered after every new form is filled
 @app.route("/<variable>",methods=['POST','GET'])
 def test(variable):
 	return render_template	("test.php", data=json.dumps(startValue))
 
+#Rendered after contact us is clicked
 @app.route("/contact",methods=['POST','GET'])
 def contact():
 	return render_template	("contact.php")
 
-
-
+#Geoprocessing to be done after the Living Conditons form is filled
 @app.route("/living",methods=['POST','GET'])
 def living():
+
+	#Geoprocessing begins: enviroment is set and global variables decleared
 	arcpy.env.overwriteOutput = True
 	global tempVal
 	global geo
@@ -40,6 +44,8 @@ def living():
 	global startValue
 	startValue = "finalAreas"+str(tempVal)
 	variable = startValue
+
+	#User input from Living conditions form is converted to integer: Arguments are from the form(livingconditionform.php)
 	Ambuvalue=request.form.get("Ambuvalue")
 	AmbuvalueInt = int(Ambuvalue)
 
@@ -61,8 +67,7 @@ def living():
 	
 	print (startValue)
 
-
-	
+	#Weighted Sum Begins
 	Raster_Supermarket_tif = "C:\\IPProject\\IPProject_files\\GithubIP\\Rasters\\Raster_Supermarket.tif"
 	Raster_School_tif = arcpy.Raster("C:\\IPProject\\IPProject_files\\GithubIP\\Rasters\\Raster_School.tif")
 	Raster_Parks_tif = arcpy.Raster("C:\\IPProject\\IPProject_files\\GithubIP\\Rasters\\Raster_Parks.tif")
@@ -83,7 +88,7 @@ def living():
 	
 	Output_polygon_features = "C:\\ipproject\\IPProject_files\\GithubIP\\Vector\\"+startValue+".shp"
 	arcpy.RasterToPolygon_conversion(outRasterReclass, Output_polygon_features, "SIMPLIFY", "VALUE","MULTIPLE_OUTER_PART")
-	
+	#Weighted Sum ends
 
 	#Spatial Join Begins
 	ApartmentLocations = "C:\\IPProject\\IPProject_files\\GithubIP\\Apartments\\ApartmentLocations.shp"
@@ -98,20 +103,20 @@ def living():
 	#Spatial Join Ends
 
 
-	# Start - Data store for final areas
+	#Weighted sum output (Final Areas vector) pushed to geoserver
 	geo.create_datastore(name=startValue, path=Output_polygon_features, workspace='ipproject')
 	geo.publish_featurestore(workspace='ipproject', store_name=startValue, pg_table=startValue)
 	geo.publish_style(layer_name=startValue, style_name='finalAreas_ope', workspace='ipproject')
-	# End - Data store for final areas
 
-	# Start - Data store for final apartments
+
+	#Spatial join output (Final Apartments vector) pushed to geoserver
 	apartmentsDataStore = "apartment"+startValue
 	geo.create_datastore(name=apartmentsDataStore, path=finalapartment_shp, workspace='ipproject')
 	geo.publish_featurestore(workspace='ipproject', store_name=apartmentsDataStore, pg_table=apartmentsDataStore)
 	geo.publish_style(layer_name=apartmentsDataStore, style_name='finalAparts', workspace='ipproject')
-	# End - Data store for final apartments
+	
 
-
+	#Geoprocessing ends
 	
 	return redirect(url_for('test',variable = startValue))
 
