@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20230216</CreaDate><CreaTime>23534200</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20230216" Time="235342">AddField C:\ipproject\IPProject_files\GithubIP\Vector\Spatial_Join\apartmentfinalAreas1.shp suitab Text # # # # NULLABLE NON_REQUIRED #</Process><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20230216" Time="235343">AddField C:\ipproject\IPProject_files\GithubIP\Vector\Spatial_Join\apartmentfinalAreas1.shp Lat "Double (64-bit floating point)" # # # # NULLABLE NON_REQUIRED #</Process><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20230216" Time="235343">AddField C:\ipproject\IPProject_files\GithubIP\Vector\Spatial_Join\apartmentfinalAreas1.shp Lon "Double (64-bit floating point)" # # # # NULLABLE NON_REQUIRED #</Process><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\CalculateField" Date="20230216" Time="235345">CalculateField C:\ipproject\IPProject_files\GithubIP\Vector\Spatial_Join\apartmentfinalAreas1.shp suitab fieldCal(!gridcode!) "Python 3" "def fieldCal(gridcode):
+	if gridcode==0:
+	    return "Best"
+	elif gridcode==1:
+	    return "Good"
+	elif gridcode==2:
+	    return "Moderate"
+	elif gridcode==3:
+	    return "Bad"
+	elif gridcode==4:
+	    return "Worst"" Text NO_ENFORCE_DOMAINS</Process></lineage></DataProperties></Esri></metadata>
