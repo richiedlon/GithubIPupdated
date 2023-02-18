@@ -98,18 +98,10 @@
 
 <br>
             <div class="slidecontainer">
-<<<<<<< Updated upstream
-                <p>Enter your Email address</p>
-                <input type="email" class="slider" id="emailRecipient" name="emailRecipient">
-            </div>
-<br> 
-        
-=======
                 <p>Enter your Email address to recieve coordinates of apartments</p>
                 <input type="email" class="slider" id="emailRecipient" name="emailRecipient">
             </div>
 <br>
->>>>>>> Stashed changes
         <div class="buttons">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
