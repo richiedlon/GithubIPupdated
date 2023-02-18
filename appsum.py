@@ -27,7 +27,7 @@ app.config['MAIL_USE_SSL']=True
 
 mail = Mail(app)  #Initialize a flask mail application
 
-rootDirectory = "C:\\IPProject\\IPProject_files\\GithubIPupdated\\"   ##### Define root directory #####
+rootDirectory = "C:\\IPProject\\IPProject_files\\GithubIP\\"   ##### Define root directory #####
 
 # Start - Celery configuration for Asyncronous task execution
 app.config['CELERY_BROKER_URL'] = 'amqps://apcshbwa:CSR0XprhltThgK3KAbrbEIfW2QO6deYM@stingray.rmq.cloudamqp.com/apcshbwa' # Rabbitmq message que to send Async tasks
