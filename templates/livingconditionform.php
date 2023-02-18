@@ -96,10 +96,18 @@
             }
             </script>
 
+<br>
+            <div class="slidecontainer">
+                <p>Enter your Email address</p>
+                <input type="email" class="slider" id="emailRecipient" name="emailRecipient">
+            </div>
+<br> 
+        
         <div class="buttons">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+
 
     </form>
 </div>
